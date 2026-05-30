@@ -117,7 +117,7 @@
     <!-- PRODUITS -->
     <section class="products-section">
       <div class="products-header">
-        <span>24 parfums trouvés</span>
+        <span><!-- Le nombre de produits trouvés sera affiché ici par PHP --></span>
         <select name="tri">
           <option value="prix-asc">Prix croissant</option>
           <option value="prix-desc">Prix décroissant</option>

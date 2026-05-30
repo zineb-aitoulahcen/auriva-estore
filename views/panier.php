@@ -12,7 +12,7 @@
 <nav class="navbar">
     <div class="nav-logo">AURIVA</div>
     <ul class="nav-links">
-        <li><a href="accueil.html">Accueil</a></li>
+        <li><a href="accueil.php">Accueil</a></li>
         <li><a href="panier.php" class="active">Panier</a></li>
         <li><a href="suivi_commande.php">Suivi</a></li>
         <li><a href="historique.php">Historique</a></li>
@@ -37,7 +37,7 @@
             <!-- Les articles seront affichés ici par PHP -->
             <div class="panier-vide">
                 <p>Votre panier est vide.</p>
-                <a href="accueil.html" class="btn-gold">Découvrir nos parfums</a>
+                <a href="accueil.php" class="btn-gold">Découvrir nos parfums</a>
             </div>
 
         </div>
