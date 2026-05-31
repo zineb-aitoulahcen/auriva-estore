@@ -1,11 +1,10 @@
 <?php
-    require 'db.php';
     class Produit{
         // recuperer tous les produits
         public static function getAll($pdo){
             $sql = "SELECT * FROM produit";
             $pdostmt = $pdo->query($sql);
-            return $pdostmt->fetch(PDO::FETCH_ASSOC);
+            return $pdostmt->fetchAll(PDO::FETCH_ASSOC);
         }
         // recuperer un produit par son id
         public static function getById($pdo,$id){

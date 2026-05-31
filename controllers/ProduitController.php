@@ -1,8 +1,9 @@
 <?php
 session_start();
-require '../config/db.php';
-require '../models/Produit.php';
-
+require_once '../config/db.php';
+require_once '../models/Produit.php';
+require_once '../models/Panier.php';
+$pdo = connectToBD();
 // Récupérer la catégorie si filtre appliqué
 $categorie = isset($_GET['categorie']) ? $_GET['categorie'] : null;
 

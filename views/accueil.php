@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -9,20 +8,24 @@
   <link rel="stylesheet" href="/auriva-estore/assets/css/accueil.css" />
 </head>
 <body>
-
+  <?php
+  $nb_articles = 0;
+  if (isset($_SESSION['user'])) {
+      $nb_articles = Panier::compterArticles($pdo, $_SESSION['user']['id']);
+  }?>
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="nav-left">
       <a href="accueil.php" class="logo">AURIVA</a>
       <a href="accueil.php" class="nav-link active">Accueil</a>
-      <a href="panier.php" class="nav-link">Panier <span class="cart-badge">0</span></a>
-      <a href="suivi.php" class="nav-link">Suivi</a>
-      <a href="historique.php" class="nav-link">Historique</a>
-      <a href="contact.php" class="nav-link">Contact</a>
+      <a href="../views/panier.php" class="nav-link">Panier <span class="cart-badge"><?php echo $nb_articles; ?></span></a>
+      <a href="../views/suivi.php" class="nav-link">Suivi</a>
+      <a href="../views/historique.php" class="nav-link">Historique</a>
+      <a href="../views/contact.php" class="nav-link">Contact</a>
       <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'){ ?>
-        <a href="admin/gestion_produits.php" class="nav-link">Produits</a>
-        <a href="admin/gestion_clients.php" class="nav-link">Clients</a>
-        <a href="admin/statistiques.php" class="nav-link">Statistiques</a>
+        <a href="../views/admin/gestion_produits.php" class="nav-link">Produits</a>
+        <a href="../views/admin/gestion_clients.php" class="nav-link">Clients</a>
+        <a href="../views/admin/statistiques.php" class="nav-link">Statistiques</a>
       <?php } ?>
     </div>
     <div class="nav-right">

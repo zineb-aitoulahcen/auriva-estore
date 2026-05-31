@@ -2,7 +2,7 @@
     session_start();
     require '../config/db.php';
     require '../models/Panier.php';
-
+    $pdo = connectToBD();
     $action    = $_POST['action'] ?? '';
     $client_id = $_SESSION['user']['id'];
 
@@ -10,7 +10,7 @@
     if ($action === 'ajouter') {
         $produit_id = $_POST['produit_id'];
         Panier::ajouter($pdo, $client_id, $produit_id);
-        header('Location: ../views/accueil.php');
+        header('Location: ../controllers/ProduitController.php');
         exit;
     }
 
