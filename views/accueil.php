@@ -12,12 +12,12 @@
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="nav-left">
-      <a href="accueil.html" class="logo">AURIVA</a>
-      <a href="accueil.html" class="nav-link active">Accueil</a>
-      <a href="panier.html" class="nav-link">Panier <span class="cart-badge">0</span></a>
-      <a href="suivi.html" class="nav-link">Suivi</a>
-      <a href="historique.html" class="nav-link">Historique</a>
-      <a href="contact.html" class="nav-link">Contact</a>
+      <a href="accueil.php" class="logo">AURIVA</a>
+      <a href="accueil.php" class="nav-link active">Accueil</a>
+      <a href="panier.php" class="nav-link">Panier <span class="cart-badge">0</span></a>
+      <a href="suivi.php" class="nav-link">Suivi</a>
+      <a href="historique.php" class="nav-link">Historique</a>
+      <a href="contact.php" class="nav-link">Contact</a>
       <!-- Admin only : sera géré en PHP -->
       <a href="#" class="nav-link admin-only">Produits</a>
       <a href="#" class="nav-link admin-only">Clients</a>
@@ -29,28 +29,30 @@
           &#9776; <span>Compte</span>
         </button>
         <div class="user-dropdown">
-          <a href="login.html">Se connecter</a>
-          <a href="register.html">S'inscrire</a>
+          <a href="login.php">Se connecter</a>
+          <a href="register.php">S'inscrire</a>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero">
+ <!-- HERO -->
+<section class="hero">
     <h1>Découvrez nos parfums d'exception</h1>
     <p>Explorez notre collection et trouvez votre signature olfactive</p>
-    <div class="search-bar">
-      <input type="text" name="recherche" placeholder="Rechercher un parfum, une marque..." />
-      <select name="categorie">
-        <option value="">Toutes catégories</option>
-        <option value="femme">Femme</option>
-        <option value="homme">Homme</option>
-        <option value="mixte">Mixte</option>
-      </select>
-      <button type="submit">Chercher</button>
-    </div>
-  </section>
+    <form method="GET" action="../controllers/ProduitController.php">
+        <div class="search-bar">
+            <input type="text" name="recherche" placeholder="Rechercher un parfum, une marque..." />
+            <select name="categorie">
+                <option value="">Toutes catégories</option>
+                <option value="femme">Femme</option>
+                <option value="homme">Homme</option>
+                <option value="mixte">Mixte</option>
+            </select>
+            <button type="submit">Chercher</button>
+        </div>
+    </form>
+</section>
 
   <!-- MAIN -->
   <div class="main-layout">
