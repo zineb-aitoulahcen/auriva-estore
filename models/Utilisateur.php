@@ -1,11 +1,11 @@
 <?php
-require('../config/db.php');
+require_once('../config/db.php');
 
 // ===== Chercher user par email =====
 function getUserByEmail($email) {
     $pdo = connectToBD();
     
-    $sql = "SELECT * FROM utilisateurs 
+    $sql = "SELECT * FROM utilisateur 
             WHERE email = :email";
     
     $stmt = $pdo->prepare($sql);
@@ -18,7 +18,7 @@ function getUserByEmail($email) {
 function creerUtilisateur($prenom, $nom, $email, $tel, $pwd) {
     $pdo = connectToBD();
     
-    $sql = "INSERT INTO utilisateurs (prenom, nom, email, telephone, mot_de_passe)
+    $sql = "INSERT INTO utilisateur (prenom, nom, email, telephone, mot_de_passe)
             VALUES (:prenom, :nom, :email, :tel, :pwd)";
     
     $stmt = $pdo->prepare($sql);
@@ -35,7 +35,7 @@ function creerUtilisateur($prenom, $nom, $email, $tel, $pwd) {
 function countUtilisateurs() {
     $pdo = connectToBD();
     
-    $sql = "SELECT COUNT(*) FROM utilisateurs";
+    $sql = "SELECT COUNT(*) FROM utilisateur";
     
     $stmt = $pdo->prepare($sql);
     $stmt->execute();

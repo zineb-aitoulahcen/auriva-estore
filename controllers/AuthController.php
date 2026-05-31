@@ -1,7 +1,7 @@
 <?php
 session_start();
-require('../config/db.php');
-require('../models/Utilisateur.php'); 
+require_once('../config/db.php');
+require_once('../models/Utilisateur.php');
 
 $action = $_POST['action'] ?? '';
 
