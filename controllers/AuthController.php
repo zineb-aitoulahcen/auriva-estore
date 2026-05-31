@@ -1,11 +1,7 @@
 <?php
 session_start();
 require_once('../config/db.php');
-<<<<<<< HEAD
 require_once('../models/Utilisateur.php'); 
-=======
-require_once('../models/Utilisateur.php');
->>>>>>> 4159ef3990bc511e9be7764400d20d3760f34f42
 
 $action = $_POST['action'] ?? '';
 
