@@ -1,6 +1,7 @@
 <?php
 session_start();
 require('../config/db.php');
+require('../models/Utilisateur.php'); 
 
 $action = $_POST['action'] ?? '';
 
@@ -10,31 +11,15 @@ if($action === 'connexion') {
     $email = $_POST['email'] ?? '';
     $pwd   = $_POST['pwd']   ?? '';
 
-    try {
-        $pdo = connectToBD();
+    
+    $user = getUserByEmail($email);
 
-        $sql = "SELECT COUNT(*) FROM utilisateurs 
-                WHERE email = :email 
-                AND mot_de_passe = :pwd";
-
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            'email' => $email,
-            'pwd'   => $pwd
-        ]);
-
-        $nbrLigne = $stmt->fetchColumn(0);
-
-        if($nbrLigne == 1) {
-            $_SESSION['user']  = true;
-            $_SESSION['email'] = $email;
-            header('Location: ../views/accueil.php');
-        } else {
-            die("Email ou mot de passe incorrect");
-        }
-
-    } catch(PDOException $e) {
-        die('Erreur : ' . $e->getMessage());
+    if($user && $user['mot_de_passe'] === $pwd) {
+        $_SESSION['user']  = true;
+        $_SESSION['email'] = $email;
+        header('Location: ../views/accueil.php');
+    } else {
+        die("Email ou mot de passe incorrect");
     }
     exit;
 }
@@ -53,26 +38,15 @@ if($action === 'inscription') {
         die("Les mots de passe ne correspondent pas");
     }
 
-    try {
-        $pdo = connectToBD();
 
-        $sql = "INSERT INTO utilisateurs (prenom, nom, email, telephone, mot_de_passe)
-                VALUES (:prenom, :nom, :email, :tel, :pwd)";
-
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            'prenom' => $prenom,
-            'nom'    => $nom,
-            'email'  => $email,
-            'tel'    => $tel,
-            'pwd'    => $pwd
-        ]);
-
-        header('Location: ../views/login.php');
-
-    } catch(PDOException $e) {
+    $userExiste = getUserByEmail($email);
+    if($userExiste) {
         die("Cet email est deja utilise");
     }
+
+    
+    creerUtilisateur($prenom, $nom, $email, $tel, $pwd);
+    header('Location: ../views/login.php');
     exit;
 }
 ?>
