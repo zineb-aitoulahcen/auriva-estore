@@ -1,7 +1,11 @@
 <?php
 session_start();
 require_once('../config/db.php');
+<<<<<<< HEAD
 require_once('../models/Utilisateur.php'); 
+=======
+require_once('../models/Utilisateur.php');
+>>>>>>> 4159ef3990bc511e9be7764400d20d3760f34f42
 
 $action = $_POST['action'] ?? '';
 
@@ -15,7 +19,7 @@ if($action === 'connexion') {
     $user = getUserByEmail($email);
 
     if($user && $user['mot_de_passe'] === $pwd) {
-        $_SESSION['user']  = true;
+        $_SESSION['user']  = $user;
         $_SESSION['email'] = $email;
         header('Location: ../views/accueil.php');
     } else {
