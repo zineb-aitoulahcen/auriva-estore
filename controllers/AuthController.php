@@ -15,7 +15,7 @@ if($action === 'connexion') {
     $user = getUserByEmail($email);
 
     if($user && $user['mot_de_passe'] === $pwd) {
-        $_SESSION['user']  = true;
+        $_SESSION['user']  = $user;
         $_SESSION['email'] = $email;
         header('Location: ../views/accueil.php');
     } else {
