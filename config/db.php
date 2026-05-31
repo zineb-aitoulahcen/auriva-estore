@@ -1,11 +1,10 @@
 <?php
-// Chaque fois on est besoin de la BD , in iclu ce fichier et on utilise conectToBD()
-   function connectToBD(){
-    try{
-        $cnx = new PDO("mysql:host=localhost;dbname=auriva","root","nouveau1234");
+function connectToBD() {
+    try {
+        $cnx = new PDO("mysql:host=localhost;dbname=auriva;charset=utf8", "root", "aya123");
         return $cnx;
-    }catch(PDOException $e){
-        echo "Erreur de connexion à la base de données : " . $e->getMessage();
+    } catch(PDOException $e) {
+        die("Erreur de connexion : " . $e->getMessage());
     }
-   }
+}
 ?>

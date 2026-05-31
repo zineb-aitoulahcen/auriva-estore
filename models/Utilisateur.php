@@ -5,7 +5,7 @@ require_once('../config/db.php');
 function getUserByEmail($email) {
     $pdo = connectToBD();
     
-    $sql = "SELECT * FROM utilisateur 
+    $sql = "SELECT * FROM utilisateur
             WHERE email = :email";
     
     $stmt = $pdo->prepare($sql);
