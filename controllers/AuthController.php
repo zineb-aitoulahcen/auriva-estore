@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once('../config/db.php');
+require('../config/db.php');
 
 $action = $_POST['action'] ?? '';
 
@@ -30,8 +30,7 @@ if($action === 'connexion') {
             $_SESSION['email'] = $email;
             header('Location: ../views/accueil.php');
         } else {
-            $_SESSION['erreur'] = "Email ou mot de passe incorrect.";
-            header('Location: ../views/login.php');
+            die("Email ou mot de passe incorrect");
         }
 
     } catch(PDOException $e) {
@@ -51,9 +50,7 @@ if($action === 'inscription') {
     $confirm = $_POST['confirm_pwd'] ?? '';
 
     if($pwd !== $confirm) {
-        $_SESSION['erreur'] = "Les mots de passe ne correspondent pas.";
-        header('Location: ../views/register.php');
-        exit;
+        die("Les mots de passe ne correspondent pas");
     }
 
     try {
@@ -71,12 +68,10 @@ if($action === 'inscription') {
             'pwd'    => $pwd
         ]);
 
-        $_SESSION['succes'] = "Compte créé avec succès ! Connectez-vous.";
         header('Location: ../views/login.php');
 
     } catch(PDOException $e) {
-        $_SESSION['erreur'] = "Cet email est déjà utilisé.";
-        header('Location: ../views/register.php');
+        die("Cet email est deja utilise");
     }
     exit;
 }
