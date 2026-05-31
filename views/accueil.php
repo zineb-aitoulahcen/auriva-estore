@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -18,19 +19,30 @@
       <a href="suivi.php" class="nav-link">Suivi</a>
       <a href="historique.php" class="nav-link">Historique</a>
       <a href="contact.php" class="nav-link">Contact</a>
-      <!-- Admin only : sera géré en PHP -->
-      <a href="#" class="nav-link admin-only">Produits</a>
-      <a href="#" class="nav-link admin-only">Clients</a>
-      <a href="#" class="nav-link admin-only">Statistiques</a>
+      <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'){ ?>
+        <a href="admin/gestion_produits.php" class="nav-link">Produits</a>
+        <a href="admin/gestion_clients.php" class="nav-link">Clients</a>
+        <a href="admin/statistiques.php" class="nav-link">Statistiques</a>
+      <?php } ?>
     </div>
     <div class="nav-right">
       <div class="user-menu">
-        <button class="user-btn">
-          &#9776; <span>Compte</span>
-        </button>
-        <div class="user-dropdown">
-          <a href="login.php">Se connecter</a>
-          <a href="register.php">S'inscrire</a>
+          <?php if (isset($_SESSION['user'])) { ?>
+          <button class="user-btn">
+            &#9776; <span><?php echo $_SESSION['user']['prenom']; ?></span>
+          </button>
+          <div class="user-dropdown">
+            <a href="../controllers/AuthController.php?action=deconnexion">Se déconnecter</a>
+          </div>
+          <?php } else { ?>
+          <button class="user-btn">
+            &#9776; <span>Compte</span>
+          </button>
+          <div class="user-dropdown">
+            <a href="login.php">Se connecter</a>
+            <a href="register.php">S'inscrire</a>
+          </div>
+          <?php } ?>
         </div>
       </div>
     </div>
@@ -119,7 +131,7 @@
     <!-- PRODUITS -->
     <section class="products-section">
       <div class="products-header">
-        <span><!-- Le nombre de produits trouvés sera affiché ici par PHP --></span>
+        <span><?php echo count($produits); ?> parfums trouvés</span>
         <select name="tri">
           <option value="prix-asc">Prix croissant</option>
           <option value="prix-desc">Prix décroissant</option>
@@ -129,7 +141,25 @@
 
       <!-- Grille produits : sera générée par PHP -->
       <div class="products-grid">
-        <!-- PHP va générer les cartes ici -->
+        <?php if (empty($produits)){ ?>
+          <p>Aucun produit trouvé.</p>
+        <?php } else{ 
+          foreach ($produits as $p){ ?>
+          <div class="product-card">
+            <img src="<?php echo $p['image']; ?>" alt="<?php echo $p['nom']; ?>">
+            <div class="product-info">
+                <h3><?php echo $p['nom']; ?></h3>
+                <p class="marque"><?php echo $p['marque']; ?></p>
+                <p class="prix"><?php echo $p['prix']; ?> MAD</p>
+                <form method="POST" action="../controllers/PanierController.php">
+                    <input type="hidden" name="action" value="ajouter">
+                    <input type="hidden" name="produit_id" value="<?php echo $p['id']; ?>">
+                    <button type="submit" class="btn-add">+ Panier</button>
+                </form>
+            </div>
+         </div>
+          <?php } } ?>
+          
       </div>
     </section>
 
