@@ -58,5 +58,11 @@
             $stmt->execute([$client_id]);
             return $stmt->fetchColumn() ?? 0;
         }
-    }
+         // Compter le nombre d'articles dans le panier
+        public static function compterArticles($pdo, $client_id) {
+            $stmt = $pdo->prepare("SELECT SUM(quantite) FROM panier WHERE client_id = ?");
+            $stmt->execute([$client_id]);
+            return $stmt->fetchColumn() ?? 0;
+        }
+    }  
 ?>
