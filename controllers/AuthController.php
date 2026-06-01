@@ -12,7 +12,7 @@ if($action === 'connexion') {
     $pwd   = $_POST['pwd']   ?? '';
 
     
-    $user = getUserByEmail($email);
+    $user = Utilisateur::getUserByEmail($email);
 
     if($user && $user['mot_de_passe'] === $pwd) {
         $_SESSION['user']  = $user;
@@ -39,13 +39,13 @@ if($action === 'inscription') {
     }
 
 
-    $userExiste = getUserByEmail($email);
+    $userExiste = Utilisateur::getUserByEmail($email);
     if($userExiste) {
         die("Cet email est deja utilise");
     }
 
     
-    creerUtilisateur($prenom, $nom, $email, $tel, $pwd);
+    Utilisateur::creerUtilisateur($prenom, $nom, $email, $tel, $pwd);
     header('Location: ../views/login.php');
     exit;
 }
