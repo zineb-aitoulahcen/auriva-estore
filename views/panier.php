@@ -1,7 +1,8 @@
 <?php 
-    session_start(); 
+    require_once '../config/session.php';
     require_once '../config/db.php';
     require_once '../models/Panier.php';
+    requireConnexion();
     $pdo = connectToBD();
     $client_id = $_SESSION['user']['id'];
     $produits  = Panier::getPanier($pdo, $client_id);

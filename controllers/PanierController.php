@@ -2,12 +2,14 @@
     session_start();
     require '../config/db.php';
     require '../models/Panier.php';
+    require '../config/session.php';
     $pdo = connectToBD();
     $action    = $_POST['action'] ?? '';
     $client_id = $_SESSION['user']['id'];
 
     // ===== AJOUTER =====
     if ($action === 'ajouter') {
+        requireConnexion();
         $produit_id = $_POST['produit_id'];
         Panier::ajouter($pdo, $client_id, $produit_id);
         header('Location: ../controllers/ProduitController.php');
