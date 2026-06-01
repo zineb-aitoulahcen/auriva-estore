@@ -3,7 +3,7 @@ session_start();
 require_once('../config/db.php');
 require_once('../models/Utilisateur.php'); 
 
-$action = $_POST['action'] ?? '';
+$action = $_POST['action'] ?? $_GET['action'] ?? '';
 
 // ===== CONNEXION =====
 if($action === 'connexion') {
@@ -46,6 +46,14 @@ if($action === 'inscription') {
 
     
     creerUtilisateur($prenom, $nom, $email, $tel, $pwd);
+    header('Location: ../views/login.php');
+    exit;
+}
+
+// ===== DECONNEXION =====
+if($action === 'deconnexion') {
+    session_unset();    // vide toutes les variables de session
+    session_destroy();  // détruit la session
     header('Location: ../views/login.php');
     exit;
 }

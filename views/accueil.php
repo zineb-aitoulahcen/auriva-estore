@@ -16,8 +16,8 @@
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="nav-left">
-      <a href="accueil.php" class="logo">AURIVA</a>
-      <a href="accueil.php" class="nav-link active">Accueil</a>
+      <a href="../index.php" class="logo">AURIVA</a>
+      <a href="../index.php" class="nav-link active">Accueil</a>
       <a href="../views/panier.php" class="nav-link">Panier <span class="cart-badge"><?php echo $nb_articles; ?></span></a>
       <a href="../views/suivi.php" class="nav-link">Suivi</a>
       <a href="../views/historique.php" class="nav-link">Historique</a>
@@ -42,8 +42,8 @@
             &#9776; <span>Compte</span>
           </button>
           <div class="user-dropdown">
-            <a href="login.php">Se connecter</a>
-            <a href="register.php">S'inscrire</a>
+            <a href="../views/login.php">Se connecter</a>
+            <a href="../views/register.php">S'inscrire</a>
           </div>
           <?php } ?>
         </div>
