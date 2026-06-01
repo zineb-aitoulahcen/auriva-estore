@@ -16,18 +16,18 @@ if (isset($_POST['action'])) {
 
     // ===== AJOUTER =====
     if ($action === 'ajouter') {
-        $prenom = $_POST['prenom'] ?? '';
-        $nom    = $_POST['nom'] ?? '';
-        $email  = $_POST['email'] ?? '';
-        $tel    = $_POST['telephone'] ?? '';
-        $pwd    = $_POST['mot_de_passe'] ?? '';
+        $prenom = $_POST['prenom'];
+        $nom    = $_POST['nom'];
+        $email  = $_POST['email'];
+        $tel    = $_POST['telephone'];
+        $pwd    = $_POST['mot_de_passe'];
 
         if ($prenom && $nom && $email && $tel && $pwd) {
             if (Utilisateur::getUserByEmail($email)) {
                 $message     = "Cet email est déjà utilisé.";
                 $messageType = 'error';
             } else {
-                Utilisateur::creerUtilisateur($prenom, $nom, $email, $tel, password_hash($pwd, PASSWORD_DEFAULT));
+                Utilisateur::creerUtilisateur($prenom, $nom, $email, $tel, $pwd);
                 $message     = "Client ajouté avec succès.";
                 $messageType = 'success';
             }
@@ -40,10 +40,10 @@ if (isset($_POST['action'])) {
     // ===== MODIFIER =====
     if ($action === 'modifier' && isset($_POST['id'])) {
         $id     = (int)$_POST['id'];
-        $prenom = $_POST['prenom'] ?? '';
-        $nom    = $_POST['nom'] ?? '';
-        $email  = $_POST['email'] ?? '';
-        $tel    = $_POST['telephone'] ?? '';
+        $prenom = $_POST['prenom'];
+        $nom    = $_POST['nom'];
+        $email  = $_POST['email'];
+        $tel    = $_POST['telephone'];
 
         if ($prenom && $nom && $email && $tel) {
             Utilisateur::modifierUtilisateur($id, $prenom, $nom, $email, $tel);
@@ -63,19 +63,37 @@ if (isset($_POST['action'])) {
     }
 
     // ===== CHANGER ROLE =====
-    if ($action === 'changer_role' && isset($_POST['id'], $_POST['role'])) {
-        $roleValide = in_array($_POST['role'], ['client', 'admin']) ? $_POST['role'] : 'client';
-        Utilisateur::changerRole((int)$_POST['id'], $roleValide);
-        $message     = "Rôle mis à jour avec succès.";
-        $messageType = 'success';
+    if ($action === 'changer_role' && isset($_POST['id']) && isset($_POST['role'])) {
+        $role = $_POST['role'];
+        if ($role === 'client' || $role === 'admin') {
+            Utilisateur::changerRole((int)$_POST['id'], $role);
+            $message     = "Rôle mis à jour avec succès.";
+            $messageType = 'success';
+        }
     }
 }
 
 // Recherche + données
-$terme        = $_GET['recherche'] ?? '';
-$clients      = $terme ? Utilisateur::rechercherClients($terme) : Utilisateur::getAllClients();
-$total        = Utilisateur::countUtilisateurs();
-$totalClients = count(array_filter($clients, fn($c) => $c['role'] === 'client'));
+$terme   = '';
+if (isset($_GET['recherche'])) {
+    $terme = $_GET['recherche'];
+}
+
+if ($terme) {
+    $clients = Utilisateur::rechercherClients($terme);
+} else {
+    $clients = Utilisateur::getAllClients();
+}
+
+$total = Utilisateur::countUtilisateurs();
+
+// Compter les clients (sans arrow function)
+$totalClients = 0;
+foreach ($clients as $c) {
+    if ($c['role'] === 'client') {
+        $totalClients++;
+    }
+}
 
 // Charger la vue
 require_once '../views/admin/gestion_clients.php';
