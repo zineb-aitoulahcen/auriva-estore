@@ -10,9 +10,9 @@
 <body>
   <?php
   $nb_articles = 0;
-  if (isset($_SESSION['user'])) {
-      $nb_articles = Panier::compterArticles($pdo, $_SESSION['user']['id']);
-  }?>
+if (isset($_SESSION['user'])) {
+    $nb_articles = Panier::compterArticles($pdo, $_SESSION['id']);
+}
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="nav-left">
@@ -20,8 +20,8 @@
       <a href="../index.php" class="nav-link active">Accueil</a>
       <a href="../views/panier.php" class="nav-link">Panier <span class="cart-badge"><?php echo $nb_articles; ?></span></a>
       <a href="../views/suivi.php" class="nav-link">Suivi</a>
-      <a href="../views/historique.php" class="nav-link">Historique</a>
-      <a href="../views/contact.php" class="nav-link">Contact</a>
+      <a href="../views/suivi_commande.php" class="nav-link">Suivi</a>
+     <a href="../views/historique_commandes.php" class="nav-link">Historique</a>
       <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'){ ?>
         <a href="../views/admin/gestion_produits.php" class="nav-link">Produits</a>
         <a href="../controllers/ClientController.php" class="nav-link">Clients</a>
