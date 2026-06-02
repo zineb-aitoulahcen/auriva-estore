@@ -55,6 +55,46 @@
             $stmt = $pdo->prepare("DELETE FROM produit WHERE id = ?");
             $stmt->execute([$id]);
         }
+        public static function filtrer($recherche = null, $categorie = null, $marque = null, $prix_max = null, $famille = null, $taille = null, $genre = null, $tri = null) {
+        $pdo = connectToBD();
+        $sql = "SELECT * FROM produit WHERE 1=1";
+        $params = [];
+
+        if (!empty($recherche)) {
+            $sql .= " AND (nom LIKE ? OR marque LIKE ?)";
+            $params[] = "%$recherche%";
+            $params[] = "%$recherche%";
+        }
+        if (!empty($categorie)) {
+            $sql .= " AND categorie = ?";
+            $params[] = $categorie;
+        }
+        if (!empty($marque)) {
+            $sql .= " AND marque = ?";
+            $params[] = $marque;
+        }
+        if (!empty($prix_max)) {
+            $sql .= " AND prix <= ?";
+            $params[] = $prix_max;
+        }
+        if (!empty($famille)) {
+            $sql .= " AND famille = ?";
+            $params[] = $famille;
+        }
+        if (!empty($taille)) {
+            $sql .= " AND taille = ?";
+            $params[] = $taille;
+        }
+    
+        if ($tri === 'prix-asc') $sql .= " ORDER BY prix ASC";
+        elseif ($tri === 'prix-desc') $sql .= " ORDER BY prix DESC";
+        elseif ($tri === 'nouveau') $sql .= " ORDER BY id DESC";
+        else $sql .= " ORDER BY id DESC";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     }
 ?>

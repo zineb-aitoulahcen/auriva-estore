@@ -12,7 +12,7 @@
 <?php
 $nb_articles = 0;
 if (isset($_SESSION['user'])) {
-    $nb_articles = Panier::compterArticles($pdo, $_SESSION['id']);
+    $nb_articles = Panier::compterArticles($pdo, $_SESSION['user']['id']);
 }
 ?>
 <!-- NAVBAR -->
@@ -27,7 +27,7 @@ if (isset($_SESSION['user'])) {
       <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'){ ?>
         <a href="../controllers/GestionProduitController.php" class="nav-link">Produits</a>
         <a href="../controllers/ClientController.php" class="nav-link">Clients</a>
-        <a href="../views/admin/statistiques.php" class="nav-link">Statistiques</a>
+        <a href="../controllers/StatistiquesController.php" class="nav-link">Statistiques</a>
       <?php } ?>
     </div>
     <div class="nav-right">
@@ -76,36 +76,43 @@ if (isset($_SESSION['user'])) {
 
     <!-- SIDEBAR FILTRES -->
     <aside class="sidebar">
+    <form method="GET" action="../controllers/ProduitController.php">
+      <!-- conserver les valeurs de recherche si déjà tapées -->
+      <?php if (!empty($recherche)): ?>
+        <input type="hidden" name="recherche" value="<?php echo htmlspecialchars($recherche); ?>">
+      <?php endif; ?>
+
       <h3 class="filter-title">FILTRES</h3>
 
       <div class="filter-group">
         <label>Marque</label>
         <select name="marque">
           <option value="">Toutes</option>
-          <option value="Chanel">Chanel</option>
-          <option value="Dior">Dior</option>
-          <option value="YSL">YSL</option>
-          <option value="Guerlain">Guerlain</option>
-          <option value="Hermès">Hermès</option>
-          <option value="Givenchy">Givenchy</option>
+          <option value="Chanel"  <?php if(($marque??'')==='Chanel')  echo 'selected'; ?>>Chanel</option>
+          <option value="Dior"    <?php if(($marque??'')==='Dior')    echo 'selected'; ?>>Dior</option>
+          <option value="YSL"     <?php if(($marque??'')==='YSL')     echo 'selected'; ?>>YSL</option>
+          <option value="Guerlain"<?php if(($marque??'')==='Guerlain')echo 'selected'; ?>>Guerlain</option>
+          <option value="Hermès"  <?php if(($marque??'')==='Hermès')  echo 'selected'; ?>>Hermès</option>
+          <option value="Givenchy"<?php if(($marque??'')==='Givenchy')echo 'selected'; ?>>Givenchy</option>
         </select>
       </div>
 
       <div class="filter-group">
         <label>Prix max (MAD)</label>
-        <input type="range" id="filterPrix" name="prix_max" min="100" max="3000" value="3000" step="50" />
-        <span class="prix-val" id="prixVal">≤ 3000 MAD</span>
+        <input type="range" id="filterPrix" name="prix_max" min="100" max="3000"
+              value="<?php echo $prix_max ?? 3000; ?>" step="50" />
+        <span class="prix-val" id="prixVal">≤ <?php echo $prix_max ?? 3000; ?> MAD</span>
       </div>
 
       <div class="filter-group">
         <label>Famille olfactive</label>
         <select name="famille">
           <option value="">Toutes</option>
-          <option value="Floral">Floral</option>
-          <option value="Oriental">Oriental</option>
-          <option value="Boisé">Boisé</option>
-          <option value="Frais">Frais</option>
-          <option value="Fruité">Fruité</option>
+          <option value="Floral"   <?php if(($famille??'')==='Floral')   echo 'selected'; ?>>Floral</option>
+          <option value="Oriental" <?php if(($famille??'')==='Oriental') echo 'selected'; ?>>Oriental</option>
+          <option value="Boisé"    <?php if(($famille??'')==='Boisé')    echo 'selected'; ?>>Boisé</option>
+          <option value="Frais"    <?php if(($famille??'')==='Frais')    echo 'selected'; ?>>Frais</option>
+          <option value="Fruité"   <?php if(($famille??'')==='Fruité')   echo 'selected'; ?>>Fruité</option>
         </select>
       </div>
 
@@ -113,35 +120,39 @@ if (isset($_SESSION['user'])) {
         <label>Taille</label>
         <select name="taille">
           <option value="">Toutes</option>
-          <option value="30ml">30 ml</option>
-          <option value="50ml">50 ml</option>
-          <option value="100ml">100 ml</option>
-          <option value="200ml">200 ml</option>
+          <option value="30ml" <?php if(($taille??'')==='30ml') echo 'selected'; ?>>30 ml</option>
+          <option value="50ml" <?php if(($taille??'')==='50ml') echo 'selected'; ?>>50 ml</option>
+          <option value="100ml"<?php if(($taille??'')==='100ml')echo 'selected'; ?>>100 ml</option>
+          <option value="200ml"<?php if(($taille??'')==='200ml')echo 'selected'; ?>>200 ml</option>
         </select>
       </div>
 
-      <div class="filter-group">
-        <label>Genre</label>
-        <select name="genre">
-          <option value="">Tous</option>
-          <option value="Femme">Femme</option>
-          <option value="Homme">Homme</option>
-          <option value="Mixte">Mixte</option>
-        </select>
-      </div>
-
-      <button class="reset-btn" type="reset">Réinitialiser</button>
-    </aside>
+      <button type="submit" class="reset-btn" style="background:var(--gold);color:#fff;border-color:var(--gold);margin-bottom:8px;">
+        Appliquer
+      </button>
+      <a href="../controllers/ProduitController.php" class="reset-btn" style="display:block;text-align:center;text-decoration:none;">
+        Réinitialiser
+      </a>
+    </form>
+  </aside>
 
     <!-- PRODUITS -->
     <section class="products-section">
       <div class="products-header">
         <span><?php echo count($produits); ?> parfums trouvés</span>
-        <select name="tri">
-          <option value="prix-asc">Prix croissant</option>
-          <option value="prix-desc">Prix décroissant</option>
-          <option value="nouveau">Nouveautés</option>
-        </select>
+        <form method="GET" action="../controllers/ProduitController.php" style="display:inline">
+          <!-- préserver les filtres actifs -->
+          <?php foreach(['recherche','marque','prix_max','famille','taille','genre','categorie'] as $param): ?>
+            <?php if(!empty($$param)): ?>
+              <input type="hidden" name="<?php echo $param; ?>" value="<?php echo htmlspecialchars($$param); ?>">
+            <?php endif; ?>
+          <?php endforeach; ?>
+          <select name="tri" onchange="this.form.submit()">
+            <option value="nouveau"   <?php if(($tri??'')==='nouveau')   echo 'selected'; ?>>Nouveautés</option>
+            <option value="prix-asc"  <?php if(($tri??'')==='prix-asc')  echo 'selected'; ?>>Prix croissant</option>
+            <option value="prix-desc" <?php if(($tri??'')==='prix-desc') echo 'selected'; ?>>Prix décroissant</option>
+          </select>
+        </form>
       </div>
 
       <!-- Grille produits : sera générée par PHP -->
@@ -150,17 +161,23 @@ if (isset($_SESSION['user'])) {
           <p>Aucun produit trouvé.</p>
         <?php } else{ 
           foreach ($produits as $p){ ?>
-          <div class="product-card">
-            <img src="<?php echo $p['image']; ?>" alt="<?php echo $p['nom']; ?>">
-            <div class="product-info">
-                <h3><?php echo $p['nom']; ?></h3>
-                <p class="marque"><?php echo $p['marque']; ?></p>
-                <p class="prix"><?php echo $p['prix']; ?> MAD</p>
-                <form method="POST" action="../controllers/PanierController.php">
-                    <input type="hidden" name="action" value="ajouter">
-                    <input type="hidden" name="produit_id" value="<?php echo $p['id']; ?>">
-                    <button type="submit" class="btn-add">+ Panier</button>
-                </form>
+          <div class="card">
+            <div class="card-img">
+              <?php if(!empty($p['image'])): ?>
+                <img src="/auriva-estore/<?php echo $p['image']; ?>" alt="<?php echo $p['nom']; ?>">
+              <?php else: ?>
+                🧴
+              <?php endif; ?>
+            </div>
+            <div class="card-body">
+              <div class="card-name"><?php echo $p['nom']; ?></div>
+              <div class="card-sub"><?php echo $p['marque']; ?></div>
+              <div class="card-price"><?php echo number_format($p['prix'], 2); ?> MAD</div>
+              <form method="POST" action="../controllers/PanierController.php">
+                <input type="hidden" name="action" value="ajouter">
+                <input type="hidden" name="produit_id" value="<?php echo $p['id']; ?>">
+                <button type="submit" class="add-btn">+ Panier</button>
+              </form>
             </div>
          </div>
           <?php } } ?>

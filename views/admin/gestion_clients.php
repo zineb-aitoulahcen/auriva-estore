@@ -16,7 +16,7 @@
         <a href="/auriva-estore/index.php" class="nav-link">Accueil</a>
         <a href="/auriva-estore/controllers/GestionProduitController.php" class="nav-link">Produits</a>
         <a href="/auriva-estore/controllers/ClientController.php" class="nav-link active">Clients</a>
-        <a href="/auriva-estore/views/admin/statistiques.php" class="nav-link">Statistiques</a>
+        <a href="/auriva-estore/controllers/StatistiquesController.php" class="nav-link">Statistiques</a>
     </div>
     <div class="nav-right">
         <span class="admin-badge">Admin</span>

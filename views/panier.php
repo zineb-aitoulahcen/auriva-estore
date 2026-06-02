@@ -48,7 +48,7 @@ $client_id = $_SESSION['user']['id'];
                 <?php foreach ($produits as $p){ ?>
                 <div class="panier-card">
                     <div class="panier-card-img">
-                        <img src="../assets/images/<?= $p['image'] ?>" alt="<?= $p['nom'] ?>">
+                        <img src="/auriva-estore/<?= $p['image'] ?>" alt="<?= $p['nom'] ?>">
                     </div>
                     <div class="panier-card-info">
                         <h3><?= $p['nom'] ?> <span class="marque"><?= $p['marque'] ?></span></h3>

@@ -18,7 +18,7 @@
         <a href="../index.php"                        class="nav-link">Accueil</a>
         <a href="../controllers/GestionProduitController.php"        class="nav-link active">Produits</a>
         <a href="../controllers/ClientController.php"         class="nav-link">Clients</a>
-        <a href="../views/admin/statistiques.php"             class="nav-link">Statistiques</a>
+        <a href="../controllers/StatistiquesController.php"             class="nav-link">Statistiques</a>
     </div>
     <div class="nav-right">
         <span class="admin-badge">Admin</span>

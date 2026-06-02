@@ -71,7 +71,7 @@ if(!$commande) {
         </div>
 
         <p class="switch-link">
-            <a href="historique_commandes.php">← Voir mes commandes</a>
+            <a href="/auriva-estore/views/historique_commandes.php">← Voir mes commandes</a>
         </p>
     </div>
 </div>

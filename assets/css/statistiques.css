@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #B8860B;
+  --gold-light: #D4A017;
+  --gold-pale: #F5F0E8;
+  --gold-border: #C9A84C;
+  --gold-dark: #8B6508;
+  --bg: #FAFAF8;
+  --bg-card: #FFFFFF;
+  --text: #1a1a1a;
+  --text-muted: #6b6b6b;
+  --border: #E0D9CC;
+  --danger: #c0392b;
+  --danger-light: #fdf0ef;
+  --warn: #e67e22;
+  --warn-light: #fef5ec;
+  --success: #27ae60;
+  --success-light: #edfaf3;
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── NAVBAR ──────────────────────────────────────────────────── */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 60px;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-left { display: flex; align-items: center; gap: 1.6rem; }
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-decoration: none;
+}
+.nav-link {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  padding-bottom: 2px;
+  border-bottom: 1.5px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--gold); border-bottom-color: var(--gold); }
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+.admin-badge {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  border: 1px solid var(--gold-border);
+  border-radius: 4px;
+  padding: 3px 10px;
+  text-transform: uppercase;
+}
+.btn-logout {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.btn-logout:hover { color: var(--danger); }
+
+/* ── PAGE ────────────────────────────────────────────────────── */
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+}
+
+/* ── HEADER ──────────────────────────────────────────────────── */
+.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.5px;
+}
+.page-title span {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--text-muted);
+  font-family: 'Jost', sans-serif;
+  display: block;
+  margin-top: 2px;
+}
+
+/* ── KPI GRID ────────────────────────────────────────────────── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.kpi-card.kpi-gold {
+  background: var(--gold-pale);
+  border-color: var(--gold-border);
+}
+
+.kpi-card.kpi-warn {
+  background: var(--warn-light);
+  border-color: #f0c080;
+}
+
+.kpi-icon { font-size: 1.8rem; line-height: 1; }
+
+.kpi-info { display: flex; flex-direction: column; }
+
+.kpi-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--gold);
+  line-height: 1.1;
+}
+
+.kpi-lbl {
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+  margin-top: 2px;
+}
+
+/* ── STATS ROW 2 (3 blocs côte à côte) ──────────────────────── */
+.stats-row-2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+/* ── SECTION BLOC ────────────────────────────────────────────── */
+.section-block { margin-bottom: 2rem; }
+
+.block-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.9rem;
+  letter-spacing: 0.3px;
+}
+
+/* ── TABLE ───────────────────────────────────────────────────── */
+.table-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+table { width: 100%; border-collapse: collapse; }
+thead {
+  background: var(--gold-pale);
+  border-bottom: 1px solid var(--border);
+}
+thead th {
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: #FDFCFA; }
+tbody td {
+  padding: 11px 16px;
+  font-size: 14px;
+  color: var(--text);
+  vertical-align: middle;
+}
+
+.rank {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  color: var(--gold);
+  font-weight: 500;
+  width: 30px;
+}
+
+.prix { color: var(--gold-dark); font-weight: 500; }
+.text-muted { color: var(--text-muted); font-size: 13px; }
+.empty { text-align: center; color: var(--text-muted); font-style: italic; padding: 2rem; }
+
+/* ── BADGES CATÉGORIE ────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+.badge-homme { background: #EEF2FF; color: #4B5EAA; }
+.badge-femme { background: #FFF0F5; color: #A03060; border: 1px solid #f5b8cc; }
+.badge-mixte { background: #F5F0FF; color: #6040A0; }
+
+/* ── BADGES STATUT COMMANDE ──────────────────────────────────── */
+.badge-statut { font-size: 11px; }
+.badge-en-attente    { background: #FFF8E1; color: #b8860b; border: 1px solid #f0d080; }
+.badge-en-preparation{ background: #E8F4FD; color: #2471A3; border: 1px solid #a8d0f0; }
+.badge-en-livraison  { background: #EAF7EA; color: #1E8449; border: 1px solid #a0dca0; }
+.badge-livree        { background: var(--success-light); color: var(--success); border: 1px solid #a8dfc0; }
+.badge-annulee       { background: var(--danger-light); color: var(--danger); border: 1px solid #f0b8b3; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .kpi-grid    { grid-template-columns: repeat(2, 1fr); }
+  .stats-row-2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+  .page { padding: 1.2rem 0.8rem; }
+  .navbar { padding: 0 1rem; }
+  .nav-left a:not(.logo) { display: none; }
+}

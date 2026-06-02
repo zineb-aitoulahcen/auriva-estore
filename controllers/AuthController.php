@@ -18,7 +18,7 @@ if($action === 'connexion') {
         $_SESSION['email']  = $email;
         $_SESSION['id']     = $user['id'];
         $_SESSION['prenom'] = $user['prenom'];
-        header('Location: ../views/accueil.php');
+        header('Location: /auriva-estore/controllers/ProduitController.php');
     } else {
         die("Email ou mot de passe incorrect");
     }
@@ -53,7 +53,7 @@ if($action === 'inscription') {
 if($action === 'deconnexion') {
     session_unset();
     session_destroy();
-    header('Location: ../views/login.php');
+    header('Location: /auriva-estore/controllers/ProduitController.php');
     exit;
 }
 ?>
