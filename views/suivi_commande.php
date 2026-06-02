@@ -1,5 +1,26 @@
 <?php
-require_once '../config/session.php';
+session_start();
+require_once('../config/db.php');
+require_once('../models/Commande.php');
+
+if(!isset($_SESSION['user']['id'])) {
+    header('Location: login.php');
+    exit;
+}
+
+$pdo = connectToBD();
+$id = $_GET['id'] ?? 0;
+
+if($id) {
+    $commande = Commande::getById($pdo, $id);
+} else {
+    $commandes = Commande::getByClient($pdo, $_SESSION['user']['id']);
+    $commande = !empty($commandes) ? $commandes[0] : null;
+}
+
+if(!$commande) {
+    die("Aucune commande trouvée.");
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -17,32 +38,32 @@ require_once '../config/session.php';
 
     <div class="card">
         <h2>Suivi de commande</h2>
-        <p class="card-sub">ÉTAT DE VOTRE COMMANDE</p>
+        <p class="card-sub">COMMANDE #<?= $commande['id'] ?></p>
 
         <div class="suivi-steps">
 
-            <div class="step active">
+            <div class="step <?= in_array($commande['statut'], ['en attente','en preparation','en livraison','livree']) ? 'active' : '' ?>">
                 <div class="step-icon">✅</div>
                 <div class="step-label">Commande passée</div>
             </div>
 
             <div class="step-line"></div>
 
-            <div class="step active">
+            <div class="step <?= in_array($commande['statut'], ['en preparation','en livraison','livree']) ? 'active' : '' ?>">
                 <div class="step-icon">📦</div>
                 <div class="step-label">En préparation</div>
             </div>
 
             <div class="step-line"></div>
 
-            <div class="step">
+            <div class="step <?= in_array($commande['statut'], ['en livraison','livree']) ? 'active' : '' ?>">
                 <div class="step-icon">🚚</div>
-                <div class="step-label">Expédiée</div>
+                <div class="step-label">En livraison</div>
             </div>
 
             <div class="step-line"></div>
 
-            <div class="step">
+            <div class="step <?= $commande['statut'] === 'livree' ? 'active' : '' ?>">
                 <div class="step-icon">🏠</div>
                 <div class="step-label">Livrée</div>
             </div>
@@ -50,7 +71,7 @@ require_once '../config/session.php';
         </div>
 
         <p class="switch-link">
-            <a href="historique_commandes.php">Voir mes commandes</a>
+            <a href="historique_commandes.php">← Voir mes commandes</a>
         </p>
     </div>
 </div>

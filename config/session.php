@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-
 function estConnecte() {
     return isset($_SESSION['user']);
 }
@@ -13,7 +12,7 @@ function estAdmin() {
 
 function requireConnexion() {
     if(!estConnecte()) {
-        header('Location: ../views/login.php');
+        header('Location: /auriva-estore/views/login.php');
         exit;
     }
 }

@@ -1,16 +1,17 @@
 <?php
     class Panier {
-
+       
         // Récupérer les produits du panier d'un client
-        public static function getPanier($pdo, $client_id) {
-            $stmt = $pdo->prepare("SELECT panier.id, panier.quantite, produit.nom, produit.marque, 
-                                        produit.prix, produit.image, produit.taille
-                                FROM panier 
-                                JOIN produit ON panier.produit_id = produit.id
-                                WHERE panier.client_id = ?");
-            $stmt->execute([$client_id]);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
+       public static function getPanier($pdo, $client_id) {
+    $stmt = $pdo->prepare("SELECT panier.id, panier.quantite, produit.id as produit_id,
+                                produit.nom, produit.marque, produit.prix, 
+                                produit.image, produit.taille
+                            FROM panier 
+                            JOIN produit ON panier.produit_id = produit.id
+                            WHERE panier.client_id = ?");
+    $stmt->execute([$client_id]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
         // Ajouter un produit au panier
         public static function ajouter($pdo, $client_id, $produit_id) {
