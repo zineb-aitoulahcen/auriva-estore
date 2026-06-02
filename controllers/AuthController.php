@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once('../config/db.php');
-require_once('../models/Utilisateur.php'); 
+require_once('../models/Utilisateur.php');
 
 $action = $_POST['action'] ?? $_GET['action'] ?? '';
 
@@ -11,13 +11,14 @@ if($action === 'connexion') {
     $email = $_POST['email'] ?? '';
     $pwd   = $_POST['pwd']   ?? '';
 
-    
-    $user = Utilisateur::getUserByEmail($email);
+    $user = getUserByEmail($email);
 
     if($user && $user['mot_de_passe'] === $pwd) {
-        $_SESSION['user']  = $user;
-        $_SESSION['email'] = $email;
-        header('Location: ../index.php');
+        $_SESSION['user']   = $user;
+        $_SESSION['email']  = $email;
+        $_SESSION['id']     = $user['id'];
+        $_SESSION['prenom'] = $user['prenom'];
+        header('Location: ../views/accueil.php');
     } else {
         die("Email ou mot de passe incorrect");
     }
@@ -38,22 +39,20 @@ if($action === 'inscription') {
         die("Les mots de passe ne correspondent pas");
     }
 
-
-    $userExiste = Utilisateur::getUserByEmail($email);
+    $userExiste = getUserByEmail($email);
     if($userExiste) {
         die("Cet email est deja utilise");
     }
 
-    
-    Utilisateur::creerUtilisateur($prenom, $nom, $email, $tel, $pwd);
+    creerUtilisateur($prenom, $nom, $email, $tel, $pwd);
     header('Location: ../views/login.php');
     exit;
 }
 
 // ===== DECONNEXION =====
 if($action === 'deconnexion') {
-    session_unset();    // vide toutes les variables de session
-    session_destroy();  // détruit la session
+    session_unset();
+    session_destroy();
     header('Location: ../views/login.php');
     exit;
 }
