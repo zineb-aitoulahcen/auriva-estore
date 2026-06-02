@@ -23,7 +23,7 @@
       <a href="../views/historique.php" class="nav-link">Historique</a>
       <a href="../views/contact.php" class="nav-link">Contact</a>
       <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'){ ?>
-        <a href="../views/admin/gestion_produits.php" class="nav-link">Produits</a>
+        <a href="../controllers/GestionProduitController.php" class="nav-link">Produits</a>
         <a href="../controllers/ClientController.php" class="nav-link">Clients</a>
         <a href="../views/admin/statistiques.php" class="nav-link">Statistiques</a>
       <?php } ?>

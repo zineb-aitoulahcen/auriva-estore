@@ -12,11 +12,11 @@
 <!-- NAVBAR -->
 <nav class="navbar">
     <div class="nav-left">
-        <a href="/auriva-estore/views/accueil.php" class="logo">AURIVA</a>
-        <a href="/auriva-estore/views/accueil.php" class="nav-link">Accueil</a>
-        <a href="gestion_produits.php" class="nav-link">Produits</a>
+        <a href="/auriva-estore/index.php" class="logo">AURIVA</a>
+        <a href="/auriva-estore/index.php" class="nav-link">Accueil</a>
+        <a href="/auriva-estore/controllers/GestionProduitController.php" class="nav-link">Produits</a>
         <a href="/auriva-estore/controllers/ClientController.php" class="nav-link active">Clients</a>
-        <a href="statistiques.php" class="nav-link">Statistiques</a>
+        <a href="/auriva-estore/views/admin/statistiques.php" class="nav-link">Statistiques</a>
     </div>
     <div class="nav-right">
         <span class="admin-badge">Admin</span>
