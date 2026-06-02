@@ -3,7 +3,7 @@ session_start();
 require_once('../config/db.php');
 require_once('../models/Commande.php');
 
-if(!isset($_SESSION['id'])) {
+if(!isset($_SESSION['user']['id'])) {
     header('Location: login.php');
     exit;
 }
@@ -14,7 +14,7 @@ $id = $_GET['id'] ?? 0;
 if($id) {
     $commande = Commande::getById($pdo, $id);
 } else {
-    $commandes = Commande::getByClient($pdo, $_SESSION['id']);
+    $commandes = Commande::getByClient($pdo, $_SESSION['user']['id']);
     $commande = !empty($commandes) ? $commandes[0] : null;
 }
 

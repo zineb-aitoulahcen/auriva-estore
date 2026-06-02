@@ -57,10 +57,37 @@
         exit;
     }
 
-    // ===== VALIDER COMMANDE =====
-    if ($action === 'valider') {
-        // À compléter quand on fera la partie commande
+   // ===== VALIDER COMMANDE =====
+if ($action === 'valider') {
+    $produits = Panier::getPanier($pdo, $client_id);
+
+    if (empty($produits)) {
         header('Location: ../views/panier.php');
         exit;
     }
+
+    $stmt = $pdo->prepare("
+        INSERT INTO commande (client_id, produit_id, quantite, prix_unitaire, montant_total)
+        VALUES (?, ?, ?, ?, ?)
+    ");
+
+    foreach ($produits as $p) {
+        $montant = $p['prix'] * $p['quantite'];
+        $stmt->execute([
+            $client_id,
+            $p['produit_id'],
+            $p['quantite'],
+            $p['prix'],
+            $montant
+        ]);
+    }
+
+    // Récupérer l'id de la dernière commande insérée
+    $derniere_commande_id = $pdo->lastInsertId();
+
+    Panier::vider($pdo, $client_id);
+
+    header('Location: ../views/suivi_commande.php?commande_id=' . $derniere_commande_id);
+    exit;
+}
 ?>
