@@ -4,7 +4,8 @@
     require_once '../models/Panier.php';
     requireConnexion();
     $pdo = connectToBD();
-    $client_id = $_SESSION['id'];
+   
+$client_id = $_SESSION['user']['id'];
     $produits  = Panier::getPanier($pdo, $client_id);
     $total     = Panier::calculerTotal($pdo, $client_id);
 ?>
@@ -94,9 +95,9 @@
             </div>
 
             <form method="POST" action="../controllers/PanierController.php">
-                <input type="hidden" name="action" value="valider">
-                <button type="submit" class="btn-gold btn-full">VALIDER LA COMMANDE</button>
-            </form>
+    <input type="hidden" name="action" value="valider">
+    <button type="submit" class="btn-gold btn-full">VALIDER LA COMMANDE</button>
+</form>
 
             <form method="POST" action="../controllers/PanierController.php">
                 <input type="hidden" name="action" value="vider">
