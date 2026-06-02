@@ -27,6 +27,7 @@ if (isset($_SESSION['user'])) {
       <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'){ ?>
         <a href="../controllers/GestionProduitController.php" class="nav-link">Produits</a>
         <a href="../controllers/ClientController.php" class="nav-link">Clients</a>
+        <a href="/auriva-estore/controllers/CommandeController.php" class="nav-link">Commandes</a>
         <a href="../controllers/StatistiquesController.php" class="nav-link">Statistiques</a>
       <?php } ?>
     </div>
