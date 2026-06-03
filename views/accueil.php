@@ -80,7 +80,7 @@ if (isset($_SESSION['user'])) {
     <form method="GET" action="../controllers/ProduitController.php">
       <!-- conserver les valeurs de recherche si déjà tapées -->
       <?php if (!empty($recherche)): ?>
-        <input type="hidden" name="recherche" value="<?php echo htmlspecialchars($recherche); ?>">
+        <input type="hidden" name="recherche" value="<?php echo $recherche; ?>">
       <?php endif; ?>
 
       <h3 class="filter-title">FILTRES</h3>
@@ -173,7 +173,7 @@ if (isset($_SESSION['user'])) {
             <div class="card-body">
               <div class="card-name"><?php echo $p['nom']; ?></div>
               <div class="card-sub"><?php echo $p['marque']; ?></div>
-              <div class="card-price"><?php echo number_format($p['prix'], 2); ?> MAD</div>
+              <div class="card-price"><?php echo $p['prix']; ?> MAD</div>
               <form method="POST" action="../controllers/PanierController.php">
                 <input type="hidden" name="action" value="ajouter">
                 <input type="hidden" name="produit_id" value="<?php echo $p['id']; ?>">

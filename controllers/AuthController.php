@@ -51,8 +51,8 @@ if($action === 'inscription') {
 
 // ===== DECONNEXION =====
 if($action === 'deconnexion') {
-    session_unset();
-    session_destroy();
+    session_unset(); // supp tout les var session
+    session_destroy(); // detruit la session
     header('Location: /auriva-estore/controllers/ProduitController.php');
     exit;
 }

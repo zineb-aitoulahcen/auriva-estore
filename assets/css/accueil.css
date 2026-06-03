@@ -406,3 +406,34 @@ body {
   .nav-left { gap: 1rem; }
   .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
 }
+/* ===== TRI SELECT ===== */
+select[name="tri"] {
+  padding: 9px 36px 9px 14px;
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23B8860B' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  color: var(--gold);
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+select[name="tri"]:hover {
+  border-color: var(--gold);
+  box-shadow: 0 2px 8px rgba(184, 134, 11, 0.15);
+}
+
+select[name="tri"]:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.1);
+}

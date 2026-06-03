@@ -55,7 +55,7 @@
             $stmt = $pdo->prepare("DELETE FROM produit WHERE id = ?");
             $stmt->execute([$id]);
         }
-        public static function filtrer($recherche = null, $categorie = null, $marque = null, $prix_max = null, $famille = null, $taille = null, $genre = null, $tri = null) {
+        public static function filtrer($recherche = null, $categorie = null, $marque = null, $prix_max = null, $famille = null, $taille = null, $tri = null) {
         $pdo = connectToBD();
         $sql = "SELECT * FROM produit WHERE 1=1";
         $params = [];

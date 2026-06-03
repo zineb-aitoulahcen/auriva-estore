@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    session_start(); // Démarrer la session pour accéder à $_SESSION
     require '../config/db.php';
     require '../models/Panier.php';
     require '../config/session.php';
