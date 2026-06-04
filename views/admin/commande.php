@@ -101,16 +101,19 @@
           <td><?= $c['prenom'] ?> <?= $c['nom'] ?></td>
           <td><?= $c['produit_nom'] ?></td>
           <td><?= $c['quantite'] ?></td>
-          <td><?= number_format($c['montant_total'], 2) ?> MAD</td>
+          <td><?= $c['montant_total'], 2 ?> MAD</td>
           <td><?= date('d/m/Y', strtotime($c['date_commande'])) ?></td>
           <td>
             <?php
-              $badge = match($c['statut']) {
-                'confirmée'  => 'badge-confirmee',
-                'livrée'     => 'badge-livree',
-                'annulée'    => 'badge-annulee',
-                default      => 'badge-attente'
-              };
+              if ($c['statut'] === 'confirmée') {
+                  $badge = 'badge-confirmee';
+              } elseif ($c['statut'] === 'livrée') {
+                  $badge = 'badge-livree';
+              } elseif ($c['statut'] === 'annulée') {
+                  $badge = 'badge-annulee';
+              } else {
+                  $badge = 'badge-attente';
+              }
             ?>
             <span class="badge <?= $badge ?>"><?= $c['statut'] ?></span>
           </td>
